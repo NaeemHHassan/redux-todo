@@ -1,28 +1,37 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { getAll } from "./redux/Actions";
 function App() {
   const [text, setText] = useState("");
-
-  const auth = useSelector(({ auth }) => {
-    return auth.auth;
-  });
   const dispatch = useDispatch();
-  // console.log(auth);
+
+  // const auth = useSelector(({ auth }) => {
+  //   return auth.auth;
+  // });
+
+  const categories = useSelector(({ auth }) => {
+    return auth.categories;
+  });
+
+  useEffect(() => {
+    !categories && dispatch(getAll());
+  }, [categories, dispatch]);
+
   return (
     <div className="App">
       <header className="App-header">
-        {auth && (
+        {categories && (
           <ol>
-            {auth.map((item, index) => (
+            {categories.map((item, index) => (
               <li
-                key={item}
+                key={item._id}
                 onClick={() => {
-                  dispatch({ type: "REMOVE", item });
+                  dispatch({ type: "REMOVE", _id: item._id });
                 }}
               >
-                {item}
+                {item.name}
               </li>
             ))}
           </ol>
@@ -31,8 +40,10 @@ function App() {
           <input value={text} onChange={(e) => setText(e.target.value)}></input>
           <button
             onClick={(e) => {
-              dispatch({ type: "AUTH", auth: text });
-              setText("");
+              if (text) {
+                dispatch({ type: "AUTH", auth: text });
+                setText("");
+              }
             }}
           >
             Add To Redux

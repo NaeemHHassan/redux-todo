@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import auth from "./AuthReducer";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
@@ -10,7 +10,7 @@ const Store = () => {
     key: "root",
     storage: storage,
     reconciliation: autoMergeLevel2,
-    whitelist: ["auth"],
+    whitelist: ["auth", "categories"],
   };
   const pertReducer = persistReducer(
     persistConfig,
