@@ -26,6 +26,7 @@ function App() {
               <th>_id</th>
               <th>name</th>
             </thead>
+            {/* {hello} */}
             <tbody>
           {categories.map(item=> <tr>
             <td>{item._id}</td>
