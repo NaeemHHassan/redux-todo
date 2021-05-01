@@ -9,7 +9,6 @@ const Store = () => {
   const persistConfig = {
     key: "root",
     storage: storage,
-    reconciliation: autoMergeLevel2,
     whitelist: ["auth", "categories"],
   };
   const pertReducer = persistReducer(
